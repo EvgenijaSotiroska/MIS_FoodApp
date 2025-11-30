@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:labaratoriska2/models/category_model.dart';
 import 'package:labaratoriska2/services/api_service.dart';
 import 'package:labaratoriska2/widgets/food_grid.dart';
 
 import '../models/food_model.dart';
-import '../widgets/category_grid.dart';
 
 class DetailsPage extends StatefulWidget {
   final String title;
@@ -36,7 +34,6 @@ class _DetailsState extends State<DetailsPage>{
 
   @override
   Widget build(BuildContext context){
-    String categoryName = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar : AppBar(
         backgroundColor: Colors.red[800],
@@ -49,6 +46,12 @@ class _DetailsState extends State<DetailsPage>{
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, "/favorite_recipes", arguments: _foods);
+          },
+              icon: const Icon(Icons.favorite))
+        ],
       ),
       body: _isLoading
           ? const Center(child : CircularProgressIndicator())

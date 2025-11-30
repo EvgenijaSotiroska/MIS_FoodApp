@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labaratoriska2/screens/details.dart';
+import 'package:labaratoriska2/screens/favorites.dart';
 import 'package:labaratoriska2/screens/home.dart';
 import 'package:labaratoriska2/screens/random.dart';
 import 'package:labaratoriska2/screens/recipe.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         "/details" : (context) => const DetailsPage(title: 'FoodApp'),
         "/recipe" : (context) => const RecipePage(),
         "/random_recipe" : (context) => const RandomPage(),
+        "/favorite_recipes" : (context) => const FavoritesPage()
       },
     );
   }
