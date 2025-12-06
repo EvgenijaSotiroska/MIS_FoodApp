@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:labaratoriska2/models/category_model.dart';
 import 'package:labaratoriska2/services/api_service.dart';
@@ -21,10 +22,32 @@ class _MyHomePageState extends State<MyHomePage>{
   final TextEditingController _searchController = TextEditingController();
   final ApiService _apiService = ApiService();
 
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+
+  void requestPermission() async {
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    print("Permission: ${settings.authorizationStatus}");
+  }
+
+
   @override
   void initState(){
     super.initState();
     _loadCategoires();
+    requestPermission();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Foreground notification: ${message.notification?.title}");
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("User tapped notification");
+      Navigator.pushNamed(context, "/random_recipe");
+    });
   }
 
   @override

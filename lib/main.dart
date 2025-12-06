@@ -6,13 +6,22 @@ import 'package:labaratoriska2/screens/random.dart';
 import 'package:labaratoriska2/screens/recipe.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-void main() async{
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("BG Message: ${message.notification?.title}");
+}
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,4 +46,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
